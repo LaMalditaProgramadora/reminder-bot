@@ -1,18 +1,16 @@
 import { Client } from "@notionhq/client";
 import dotenv from "dotenv";
+import { DateTime } from "luxon";
+
 dotenv.config();
 
 const notion = new Client({ auth: process.env.NOTION_TOKEN });
 const dataBaseJimenaId = process.env.NOTION_DATABASE_JIMENA;
 
-const getDate = () => {
-  let newDate = new Date().toLocaleString("sv-SE");
-  return newDate.substring(0, 10) + "T" + newDate.substring(11) + "-05:00";
-};
-
 export const addToDatabase = async (username, detail) => {
   try {
-    const response = await notion.pages.create({
+    const date = DateTime.now().setZone('America/Lima').toISO();
+    const data = {
       parent: {
         database_id: dataBaseJimenaId,
       },
@@ -31,7 +29,7 @@ export const addToDatabase = async (username, detail) => {
         Date: {
           type: "date",
           date: {
-            start: getDate(),
+            start: date,
           },
         },
         Detail: {
@@ -46,7 +44,8 @@ export const addToDatabase = async (username, detail) => {
           ],
         },
       },
-    });
+    };
+    const response = await notion.pages.create(data);
   } catch (error) {
     console.error(error.body);
   }
