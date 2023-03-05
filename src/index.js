@@ -1,0 +1,33 @@
+import dotenv from "dotenv";
+import { Client } from "discord.js";
+import { addReport } from "./services/report.service.js";
+import { intents } from "./util/constants.js";
+import { startReminderJob } from "./services/reminder.service.js";
+
+dotenv.config();
+
+const client = new Client({
+  intents: intents,
+});
+
+client.on("ready", (msg) => {
+  console.log(`Logged in as ${client.user.tag}!`);
+  startReminderJob(client, 13);
+  startReminderJob(client, 18);
+});
+
+client.on("messageCreate", (msg) => {
+  console.log(`New message: ${msg.content}`);
+  const command = msg.content.substring(0, 4);
+
+  switch (command) {
+    case "!rem":
+      addReport(msg);
+      break;
+    case "!rep":
+      //TODO
+      break;
+  }
+});
+
+client.login(process.env.DISCORD_TOKEN);

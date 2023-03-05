@@ -1,52 +1,17 @@
-import { Client } from "@notionhq/client";
 import dotenv from "dotenv";
-import { DateTime } from "luxon";
+import { allowedMentions } from "../util/constants.js";
+import { addToDatabase } from "./storage.service.js";
 
 dotenv.config();
 
-const notion = new Client({ auth: process.env.NOTION_TOKEN });
-const dataBaseJimenaId = process.env.NOTION_DATABASE_JIMENA;
-
-export const addToDatabase = async (username, detail) => {
+export const addReport = async (msg) => {
   try {
-    const date = DateTime.now().setZone('America/Lima').toISO();
-    const data = {
-      parent: {
-        database_id: dataBaseJimenaId,
-      },
-      properties: {
-        User: {
-          type: "title",
-          title: [
-            {
-              type: "text",
-              text: {
-                content: username,
-              },
-            },
-          ],
-        },
-        Date: {
-          type: "date",
-          date: {
-            start: date,
-          },
-        },
-        Detail: {
-          type: "rich_text",
-          rich_text: [
-            {
-              type: "text",
-              text: {
-                content: detail.substring(9),
-              },
-            },
-          ],
-        },
-      },
-    };
-    const response = await notion.pages.create(data);
+    addToDatabase(msg.author.username, msg.content.substring(5));
+    msg.reply({
+      content: `${msg.author.toString()}, tu mensaje ha sido registrado.`,
+      allowedMentions: allowedMentions,
+    });
   } catch (error) {
-    console.error(error.body);
+    console.error(error);
   }
 };
