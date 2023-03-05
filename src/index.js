@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import { Client } from "discord.js";
-import { addReport } from "./services/report.service.js";
+import { addReport, listReports } from "./services/report.service.js";
 import { intents } from "./util/constants.js";
 import { startReminderJob } from "./services/reminder.service.js";
 
@@ -25,7 +25,7 @@ client.on("messageCreate", (msg) => {
       addReport(msg);
       break;
     case "!rep":
-      //TODO
+      listReports(msg);
       break;
   }
 });

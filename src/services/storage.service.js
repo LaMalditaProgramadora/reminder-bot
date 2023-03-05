@@ -1,52 +1,57 @@
-import { Client } from "@notionhq/client";
 import dotenv from "dotenv";
 import { DateTime } from "luxon";
+import Report from "../model/report.model.js";
 
 dotenv.config();
 
-const notion = new Client({ auth: process.env.NOTION_TOKEN });
-const dataBaseJimenaId = process.env.NOTION_DATABASE_JIMENA;
-
-export const addToDatabase = async (username, detail) => {
+export const createReport = async (username, detail) => {
   try {
-    const date = DateTime.now().setZone('America/Lima').toISO();
-    const data = {
-      parent: {
-        database_id: dataBaseJimenaId,
+    const report = new Report({
+      username: username,
+      date: DateTime.now().setZone("America/Lima").toISO(),
+      detail: detail,
+    });
+    await report.save();
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const findAllReports = async (username) => {
+  try {
+    let courses = await Report.find({ username: username });
+    return courses;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const findReportsBetweenDates = async (username, startDate, endDate) => {
+  try {
+    let courses = await Report.find({
+      username: username,
+      date: {
+        $gte: startDate,
+        $lte: endDate,
       },
-      properties: {
-        User: {
-          type: "title",
-          title: [
-            {
-              type: "text",
-              text: {
-                content: username,
-              },
-            },
-          ],
-        },
-        Date: {
-          type: "date",
-          date: {
-            start: date,
-          },
-        },
-        Detail: {
-          type: "rich_text",
-          rich_text: [
-            {
-              type: "text",
-              text: {
-                content: detail,
-              },
-            },
-          ],
-        },
+    });
+    return courses;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const findReportsFromStartDate = async (username, startDate) => {
+  try {
+    let courses = await Report.find({
+      username: username,
+      date: {
+        $gte: startDate,
+        $lte: DateTime.now().setZone("America/Lima").toISO(),
       },
-    };
-    const response = await notion.pages.create(data);
-  } catch (error) {
-    console.error(error.body);
+    });
+    return courses;
+  } catch (e) {
+    console.log(e);
   }
 };
