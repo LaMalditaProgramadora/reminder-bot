@@ -3,6 +3,9 @@ import { Client } from "discord.js";
 import { addReport, listReports } from "./services/report.service.js";
 import { intents } from "./util/constants.js";
 import { startReminderJob } from "./services/reminder.service.js";
+import mongoose from "mongoose";
+
+await mongoose.connect(process.env.MONGODB_URL);
 
 dotenv.config();
 
