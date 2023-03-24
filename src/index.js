@@ -15,8 +15,8 @@ const client = new Client({
 
 client.on("ready", (msg) => {
   console.log(`Logged in as ${client.user.tag}!`);
-  startReminderJob(client, 13);
-  startReminderJob(client, 18);
+  startReminderJob(client, "00 00 13");
+  startReminderJob(client, "00 00 18");
 });
 
 client.on("messageCreate", (msg) => {
