@@ -1,9 +1,9 @@
+import { Client, Collection, Events } from "discord.js";
 import dotenv from "dotenv";
-import { Client } from "discord.js";
-import { addReport, listReports } from "./services/report.service.js";
-import { intents } from "./util/constants.js";
-import { startReminderJob } from "./services/reminder.service.js";
 import mongoose from "mongoose";
+import { addCommandsToClient } from "./services/command.service.js";
+import { startReminderJob } from "./services/reminder.service.js";
+import { intents } from "./util/constants.js";
 
 await mongoose.connect(process.env.MONGODB_URL);
 
@@ -13,24 +13,22 @@ const client = new Client({
   intents: intents,
 });
 
+client.commands = new Collection();
+await addCommandsToClient(client);
+
+client.on(Events.InteractionCreate, async (interaction) => {
+  const command = interaction.client.commands.get(interaction.commandName);
+  try {
+    await command.execute(interaction);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 client.on("ready", (msg) => {
   console.log(`Logged in as ${client.user.tag}!`);
   startReminderJob(client, "00 00 13");
   startReminderJob(client, "00 00 18");
-});
-
-client.on("messageCreate", (msg) => {
-  console.log(`New message: ${msg.content}`);
-  const command = msg.content.substring(0, 4);
-
-  switch (command) {
-    case "!rem":
-      addReport(msg);
-      break;
-    case "!rep":
-      listReports(msg);
-      break;
-  }
 });
 
 client.login(process.env.DISCORD_TOKEN);
