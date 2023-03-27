@@ -3,11 +3,16 @@ import { createReport, findReports } from "./storage.service.js";
 
 dotenv.config();
 
+export const isValidDate = (dateString) => {
+  const regEx = /^\d{4}-\d{2}-\d{2}$/;
+  return dateString.match(regEx) != null;
+}
+
 export const addReport = async (username, activity) => {
   try {
     createReport(username, activity);
-  } catch (error) {
-    console.error(error);
+  } catch (e) {
+    console.log(e);
   }
 };
 
@@ -25,7 +30,7 @@ export const listReports = async (username, startDate, endDate) => {
       );
     });
     return botReports;
-  } catch (error) {
-    console.error(error);
+  } catch (e) {
+    console.log(e);
   }
 };
