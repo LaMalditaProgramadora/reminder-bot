@@ -1,5 +1,17 @@
 import { SlashCommandBuilder } from "discord.js";
-import { isValidDate, listReports } from "../services/report.service.js";
+import {
+  getReponse,
+  isValidDate,
+  listReports,
+} from "../services/report.service.js";
+import {
+  dateformatErrorMessage,
+  maxLengthMessage,
+  maxLengthMessageErrorMessage,
+  noReportsErrorMessage,
+  reportSuccessfulMessage,
+  runCommandErrorMessage,
+} from "../util/constants.js";
 
 const repCommand = {
   data: new SlashCommandBuilder()
@@ -23,26 +35,27 @@ const repCommand = {
       const startDate = interaction.options._hoistedOptions[0].value;
       const endDate = interaction.options._hoistedOptions[1].value;
       if (!isValidDate(startDate) || !isValidDate(endDate)) {
-        await interaction.reply({
-          content: `${username}, hubo un error con el formato de las fechas.`,
-          ephemeral: true,
-        });
+        await interaction.reply(getReponse(username, dateformatErrorMessage));
         return;
       }
       const reports = await listReports(username, startDate, endDate);
-      await interaction.reply({
-        content:
+      if (reports.toString().length > maxLengthMessage) {
+        await interaction.reply(
+          getReponse(username, maxLengthMessageErrorMessage)
+        );
+        return;
+      }
+      await interaction.reply(
+        getReponse(
+          username,
           reports.length === 0
-            ? `${username.toString()}, no tiene registros.`
-            : `${username.toString()}, tu registro de actividades es: ${reports}`,
-        ephemeral: true,
-      });
+            ? noReportsErrorMessage
+            : reportSuccessfulMessage + reports
+        )
+      );
     } catch (e) {
       console.log(e);
-      await interaction.reply({
-        content: `${username}, hubo un error en la ejecución del comando`,
-        ephemeral: true,
-      });
+      await interaction.reply(getReponse(username, runCommandErrorMessage));
     }
   },
 };

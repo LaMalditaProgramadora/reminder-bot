@@ -1,5 +1,6 @@
 import { SlashCommandBuilder } from "discord.js";
-import { addReport } from "../services/report.service.js";
+import { addReport, getReponse } from "../services/report.service.js";
+import { reminderSuccessfulMessage } from "../util/constants.js";
 
 const remCommand = {
   data: new SlashCommandBuilder()
@@ -16,16 +17,12 @@ const remCommand = {
       const username = interaction.user.username;
       const detail = interaction.options._hoistedOptions[0].value;
       await addReport(username, detail);
-      await interaction.reply({
-        content: `${username}, tu mensaje ha sido registrado.`,
-        ephemeral: true,
-      });
+      await interaction.reply(getReponse(username, reminderSuccessfulMessage));
     } catch (e) {
       console.log(e);
-      await interaction.reply({
-        content: `${username}, hubo un error en la ejecución del comando`,
-        ephemeral: true,
-      });
+      await interaction.reply(
+        await interaction.reply(getReponse(username, runCommandErrorMessage))
+      );
     }
   },
 };
