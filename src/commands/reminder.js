@@ -1,9 +1,9 @@
 import { SlashCommandBuilder } from "discord.js";
 import { getReminderModal } from "../modal/reminder.modal.js";
-import { getReponse } from "../services/report.service.js";
 import {
   runCommandErrorMessage
 } from "../util/constants.js";
+import { getReponse } from "../util/functions.js";
 
 const remCommand = {
   data: new SlashCommandBuilder()

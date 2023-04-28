@@ -1,11 +1,9 @@
 import { SlashCommandBuilder } from "discord.js";
 import { getReportModal } from "../modal/report.modal.js";
 import {
-  getReponse
-} from "../services/report.service.js";
-import {
   runCommandErrorMessage
 } from "../util/constants.js";
+import { getReponse } from "../util/functions.js";
 
 const repCommand = {
   data: new SlashCommandBuilder()

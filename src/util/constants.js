@@ -22,3 +22,4 @@ export const noReportsErrorMessage = ', no tiene registros.';
 export const reportSuccessfulMessage = ', tu registro de actividades es: ';
 export const reminderSuccessfulMessage = ', tu mensaje ha sido registrado.';
 export const runCommandErrorMessage = ', hubo un error en la ejecución del comando';
+export const genericErrorMessage = ', hubo un error en el servidor';

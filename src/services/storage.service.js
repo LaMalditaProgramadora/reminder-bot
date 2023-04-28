@@ -1,14 +1,13 @@
 import dotenv from "dotenv";
-import { DateTime } from "luxon";
 import Report from "../model/report.model.js";
 
 dotenv.config();
 
-export const createReport = async (username, detail) => {
+export const createReport = async (username, detail, date) => {
   try {
     const report = new Report({
       username: username,
-      date: DateTime.now().setZone("America/Lima").toISO(),
+      date: date,
       detail: detail,
     });
     await report.save();
