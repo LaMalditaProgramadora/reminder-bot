@@ -21,7 +21,7 @@ const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
     });
 
     console.log(
-      `Successfully reloaded.`
+      'Actualización de comandos correcta.'
     );
   } catch (error) {
     console.error(error);

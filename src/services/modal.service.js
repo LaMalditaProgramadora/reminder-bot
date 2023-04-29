@@ -31,7 +31,7 @@ export const processModalResponse = async (fields, username) => {
 
 const processReminderModal = async (username, detail) => {
   const now = new Date();
-  const date = DateTime.fromISO(now).setZone("America/Lima").toISO();
+  const date = DateTime.now().setZone("America/Lima").toISO();
   await createReport(username, detail, date);
   return getReponseEmbed(getReminderEmbed(detail, now.toLocaleString()));
 };

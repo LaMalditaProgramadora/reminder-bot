@@ -40,6 +40,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 });
 
 client.on(Events.ClientReady, () => {
+  console.log('Reminder-Bot está en línea.');
   startReminderJob(client, "00 00 13");
   startReminderJob(client, "00 00 18");
 });

@@ -5,7 +5,7 @@ import {
 } from "../util/constants.js";
 import { getReponse } from "../util/functions.js";
 
-const repCommand = {
+const reportCommand = {
   data: new SlashCommandBuilder()
     .setName("report")
     .setDescription("Obtén un reporte de tus actividades."),
@@ -19,4 +19,4 @@ const repCommand = {
   },
 };
 
-export default repCommand;
+export default reportCommand;

@@ -5,7 +5,7 @@ import {
 } from "../util/constants.js";
 import { getReponse } from "../util/functions.js";
 
-const remCommand = {
+const reminderCommand = {
   data: new SlashCommandBuilder()
     .setName("reminder")
     .setDescription("Registra tus actividades."),
@@ -20,4 +20,4 @@ const remCommand = {
   },
 };
 
-export default remCommand;
+export default reminderCommand;
