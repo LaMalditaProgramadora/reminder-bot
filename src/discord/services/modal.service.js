@@ -4,10 +4,9 @@ import {
 } from "../../infrastructure/utils/constants.js";
 import { createReport } from "../../domain/repositories/storage.repository.js";
 import { listReports } from "../../infrastructure/services/report.service.js";
-import { getReminderEmbed } from "../embeds/reminder.embed.js";
+import { ReminderEmbed, ReportEmbed } from "../embeds/_index.js";
 import { DateTime } from "luxon";
 import { getReponse, getReponseEmbed, isValidDate } from "../../infrastructure/utils/functions.js";
-import { getReportEmbed } from "../embeds/report.embed.js";
 
 export const processModalResponse = async (fields, username) => {
   const inputType = fields.components[0].components[0].customId;
@@ -29,7 +28,7 @@ const processReminderModal = async (username, detail) => {
   const now = new Date();
   const date = DateTime.now().setZone("America/Lima").toISO();
   await createReport(username, detail, date);
-  return getReponseEmbed(getReminderEmbed(detail, now.toLocaleString()));
+  return getReponseEmbed(ReminderEmbed.getReminderEmbed(detail, now.toLocaleString()));
 };
 
 const processReportModal = async (username, startDate, endDate) => {
@@ -38,7 +37,7 @@ const processReportModal = async (username, startDate, endDate) => {
   }
 
   const reports = await listReports(username, startDate, endDate);
-  return getReponseEmbed(getReportEmbed(reports));
+  return getReponseEmbed(ReportEmbed.getReportEmbed(reports));
 };
 
 const validateDatesFormat = (startDate, endDate) => {
