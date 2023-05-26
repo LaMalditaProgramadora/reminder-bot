@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import Report from "../model/report.model.js";
+import Report from "../../domain/models/report.model.js";
 
 dotenv.config();
 

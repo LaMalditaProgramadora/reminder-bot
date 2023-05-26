@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { createReport, findReports } from "./storage.service.js";
+import { createReport, findReports } from "../../domain/repositories/storage.repository.js";
 
 dotenv.config();
 

@@ -1,10 +1,10 @@
 import { Client, Collection, Events } from "discord.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import { addCommandsToClient } from "./services/command.service.js";
-import { startReminderJob } from "./services/reminder.service.js";
-import { intents } from "./util/constants.js";
-import { processModalResponse } from "./services/modal.service.js";
+import { startReminderJob } from "./infrastructure/services/reminder.service.js";
+import { intents } from "./infrastructure/utils/constants.js";
+import { processModalResponse } from "./discord/services/modal.service.js";
+import { addCommandsToClient } from "./discord/services/command.service.js";
 
 await mongoose.connect(process.env.MONGODB_URL);
 

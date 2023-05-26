@@ -1,17 +1,13 @@
 import {
   dateformatErrorMessage,
-  maxLengthMessage,
-  maxLengthMessageErrorMessage,
-  noReportsErrorMessage,
-  reportSuccessfulMessage,
   genericErrorMessage,
-} from "../util/constants.js";
-import { createReport } from "./storage.service.js";
-import { listReports } from "./report.service.js";
-import { getReminderEmbed } from "../embed/reminder.embed.js";
+} from "../../infrastructure/utils/constants.js";
+import { createReport } from "../../domain/repositories/storage.repository.js";
+import { listReports } from "../../infrastructure/services/report.service.js";
+import { getReminderEmbed } from "../embeds/reminder.embed.js";
 import { DateTime } from "luxon";
-import { getReponse, getReponseEmbed, isValidDate } from "../util/functions.js";
-import { getReportEmbed } from "../embed/report.embed.js";
+import { getReponse, getReponseEmbed, isValidDate } from "../../infrastructure/utils/functions.js";
+import { getReportEmbed } from "../embeds/report.embed.js";
 
 export const processModalResponse = async (fields, username) => {
   const inputType = fields.components[0].components[0].customId;

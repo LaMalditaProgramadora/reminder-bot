@@ -1,6 +1,6 @@
 import { CronJob } from "cron";
 import dotenv from "dotenv";
-import { reminderMessage } from "../util/constants.js";
+import { reminderMessage } from "../utils/constants.js";
 
 dotenv.config();
 
