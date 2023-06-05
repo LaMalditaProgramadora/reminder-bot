@@ -1,6 +1,6 @@
 import { REST, Routes } from "discord.js";
 import dotenv from "dotenv";
-import { getCommandsJSON } from "./services/command.service.js";
+import { getCommandsJSON } from "./discord/services/command.service.js";
 
 dotenv.config();
 

@@ -1,10 +1,10 @@
 import { SlashCommandBuilder } from "discord.js";
-import { runCommandErrorMessage } from "@infrastructure/utils/constants.js";
 import {
   getReponse,
   getReponseEmbed,
 } from "../../infrastructure/utils/functions.js";
 import { HelpEmbed } from "../embeds/_index.js";
+import { runCommandErrorMessage } from "../../infrastructure/utils/constants.js";
 
 const helpCommand = {
   data: new SlashCommandBuilder()
